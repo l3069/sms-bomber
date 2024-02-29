@@ -11,7 +11,7 @@ import requests
 import time
 
 def open_website():
-    webbrowser.open_new("xnxx.com")
+    webbrowser.open_new("https://www.instagram.com/krstevski_1204/")
 
 def send_sms(phone_number, num_messages):
     url = 'http://sportalklub.mk/welcome/sendPIN'
