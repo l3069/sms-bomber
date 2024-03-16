@@ -11,7 +11,7 @@ import requests
 import time
 
 def open_website():
-    webbrowser.open_new("https://github.com/l3069")
+    webbrowser.open_new("https://krstevski-portfolio.000webhostapp.com/krstevski/index.html")
 
 def send_sms(phone_number, num_messages):
     url = 'http://sportalklub.mk/welcome/sendPIN'
